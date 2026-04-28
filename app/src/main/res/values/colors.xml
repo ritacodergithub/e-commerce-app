@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Brand palette -->
+    <color name="brand_primary">#6C5CE7</color>
+    <color name="brand_primary_dark">#5A4FCF</color>
+    <color name="brand_primary_light">#A29BFE</color>
+    <color name="brand_accent">#FF6B6B</color>
+    <color name="brand_accent_dark">#E55656</color>
+
+    <!-- Surfaces -->
+    <color name="bg_screen">#F8F9FB</color>
+    <color name="bg_surface">#FFFFFF</color>
+    <color name="bg_muted">#F1F3F6</color>
+
+    <!-- Text -->
+    <color name="text_primary">#1F2937</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_muted">#9CA3AF</color>
+    <color name="text_inverse">#FFFFFF</color>
+
+    <!-- Borders / dividers -->
+    <color name="divider">#E5E7EB</color>
+    <color name="stroke">#D1D5DB</color>
+
+    <!-- Status -->
+    <color name="success">#10B981</color>
+    <color name="warning">#F59E0B</color>
+    <color name="error">#EF4444</color>
+    <color name="rating_star">#F5A623</color>
+
+    <!-- Category accents -->
+    <color name="cat_electronics">#FFE2E2</color>
+    <color name="cat_fashion">#E0E7FF</color>
+    <color name="cat_home">#D1FAE5</color>
+    <color name="cat_beauty">#FCE7F3</color>
+    <color name="cat_sports">#FEF3C7</color>
+</resources>

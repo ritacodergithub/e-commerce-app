@@ -1,0 +1,132 @@
+<resources>
+    <string name="app_name">Shoply</string>
+    <string name="app_tagline">Shop happy. Live happy.</string>
+
+    <!-- Auth -->
+    <string name="login_title">Welcome back</string>
+    <string name="login_subtitle">Sign in to continue shopping</string>
+    <string name="signup_title">Create account</string>
+    <string name="signup_subtitle">Start your shopping journey</string>
+    <string name="hint_full_name">Full name</string>
+    <string name="hint_email">Email address</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm password</string>
+    <string name="action_login">Log in</string>
+    <string name="action_signup">Sign up</string>
+    <string name="action_logout">Log out</string>
+    <string name="prompt_no_account">Don\'t have an account?</string>
+    <string name="prompt_have_account">Already have an account?</string>
+    <string name="error_email_invalid">Enter a valid email</string>
+    <string name="error_password_short">Password must be at least 6 characters</string>
+    <string name="error_passwords_mismatch">Passwords don\'t match</string>
+    <string name="error_name_required">Name is required</string>
+    <string name="error_login_failed">No account found. Please sign up first.</string>
+    <string name="msg_signup_success">Account created. Welcome!</string>
+
+    <!-- Home -->
+    <string name="home_greeting">Hi, %1$s</string>
+    <string name="home_subgreeting">What are you looking for today?</string>
+    <string name="hint_search">Search products, brands…</string>
+    <string name="label_categories">Categories</string>
+    <string name="label_featured">Featured products</string>
+    <string name="label_results">Results</string>
+    <string name="empty_results">No products match your search.</string>
+    <string name="cat_all">All</string>
+    <string name="cat_electronics">Electronics</string>
+    <string name="cat_fashion">Fashion</string>
+    <string name="cat_home">Home</string>
+    <string name="cat_beauty">Beauty</string>
+    <string name="cat_sports">Sports</string>
+
+    <!-- Product Detail -->
+    <string name="detail_description">Description</string>
+    <string name="detail_about">About this item</string>
+    <string name="action_add_to_cart">Add to cart</string>
+    <string name="action_buy_now">Buy now</string>
+    <string name="msg_added_to_cart">Added to cart</string>
+    <string name="rating_format">%1$s · %2$d reviews</string>
+
+    <!-- Cart -->
+    <string name="cart_title">My Cart</string>
+    <string name="cart_empty_title">Your cart is empty</string>
+    <string name="cart_empty_subtitle">Looks like you haven\'t added anything yet.</string>
+    <string name="action_start_shopping">Start shopping</string>
+    <string name="label_subtotal">Subtotal</string>
+    <string name="label_shipping">Shipping</string>
+    <string name="label_tax">Tax (5%%)</string>
+    <string name="label_total">Total</string>
+    <string name="action_checkout">Checkout</string>
+    <string name="shipping_free">FREE</string>
+
+    <!-- Checkout -->
+    <string name="checkout_title">Checkout</string>
+    <string name="section_shipping">Shipping address</string>
+    <string name="section_payment">Payment method</string>
+    <string name="section_summary">Order summary</string>
+    <string name="hint_address_line">Street address</string>
+    <string name="hint_city">City</string>
+    <string name="hint_postal">Postal code</string>
+    <string name="hint_phone">Phone number</string>
+    <string name="payment_card">Credit / debit card</string>
+    <string name="payment_cod">Cash on delivery</string>
+    <string name="payment_upi">UPI / wallet</string>
+    <string name="hint_card_number">Card number</string>
+    <string name="hint_card_expiry">MM / YY</string>
+    <string name="hint_card_cvv">CVV</string>
+    <string name="action_place_order">Place order</string>
+    <string name="error_address_required">Please fill in your shipping address</string>
+    <string name="error_card_required">Please fill in your card details</string>
+
+    <!-- Order Success -->
+    <string name="success_title">Order placed!</string>
+    <string name="success_subtitle">Thanks for shopping with us. Your order is confirmed and will be delivered soon.</string>
+    <string name="label_order_id">Order ID</string>
+    <string name="label_order_total">Total paid</string>
+    <string name="action_continue_shopping">Continue shopping</string>
+
+    <!-- Phase 2 -->
+    <string name="banner_title_1">Mega Sale</string>
+    <string name="banner_subtitle_1">Up to 60%% off on electronics</string>
+    <string name="banner_title_2">Fresh Arrivals</string>
+    <string name="banner_subtitle_2">New season fashion just dropped</string>
+    <string name="banner_title_3">Free shipping</string>
+    <string name="banner_subtitle_3">On every order over ₹1000</string>
+    <string name="action_shop_now">Shop now</string>
+    <string name="label_wishlist">Wishlist</string>
+    <string name="wishlist_title">My Wishlist</string>
+    <string name="wishlist_empty_title">Your wishlist is empty</string>
+    <string name="wishlist_empty_subtitle">Tap the heart on products you love.</string>
+    <string name="action_move_to_cart">Move to cart</string>
+    <string name="cd_wishlist">Wishlist</string>
+    <string name="cd_remove_from_wishlist">Remove from wishlist</string>
+    <string name="orders_title">My Orders</string>
+    <string name="orders_empty_title">No orders yet</string>
+    <string name="orders_empty_subtitle">Place an order to see it here.</string>
+    <string name="label_orders">Orders</string>
+    <string name="status_delivered">Delivered</string>
+    <string name="status_shipped">Shipped</string>
+    <string name="status_processing">Processing</string>
+    <string name="filters_title">Filters</string>
+    <string name="filter_price_range">Price range</string>
+    <string name="filter_min_rating">Minimum rating</string>
+    <string name="action_apply">Apply</string>
+    <string name="action_reset">Reset</string>
+    <string name="filter_any">Any</string>
+    <string name="reviews_title">Reviews</string>
+    <string name="reviews_empty">No reviews yet.</string>
+    <string name="error_network">Couldn\'t load. Pull to retry.</string>
+    <string name="loading">Loading…</string>
+
+    <!-- Common -->
+    <string name="cd_back">Back</string>
+    <string name="cd_cart">Cart</string>
+    <string name="cd_search">Search</string>
+    <string name="cd_filter">Filter</string>
+    <string name="cd_user">Profile</string>
+    <string name="cd_product_image">Product image</string>
+    <string name="cd_increase">Increase quantity</string>
+    <string name="cd_decrease">Decrease quantity</string>
+    <string name="cd_remove">Remove item</string>
+    <string name="price_format">₹%1$s</string>
+    <string name="qty_format">Qty: %1$d</string>
+</resources>
