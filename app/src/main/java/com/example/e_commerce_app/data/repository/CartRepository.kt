@@ -1,5 +1,6 @@
 package com.example.e_commerce_app.data.repository
 
+import android.util.Log
 import com.example.e_commerce_app.data.local.dao.CartDao
 import com.example.e_commerce_app.data.local.dao.ProductDao
 import com.example.e_commerce_app.data.local.entity.CartItemEntity
@@ -19,6 +20,7 @@ class CartRepository @Inject constructor(
     fun observeCart(): Flow<List<CartItem>> =
         cartDao.observeAll().combine(productDao.observeAll()) { rows, products ->
             val byId = products.associateBy { it.id }
+            Log.e("TAG", "observeCart: $byId", )
             rows.mapNotNull { row ->
                 val product = byId[row.productId]?.toDomain() ?: return@mapNotNull null
                 CartItem(product = product, quantity = row.quantity)

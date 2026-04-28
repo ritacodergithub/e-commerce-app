@@ -19,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.e_commerce_app.R
+import com.example.e_commerce_app.databinding.ActivityCheckoutBinding
 import com.example.e_commerce_app.ui.success.OrderSuccessActivity
 import com.example.e_commerce_app.util.PriceFormat
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,6 +29,7 @@ import kotlinx.coroutines.launch
 class CheckoutActivity : AppCompatActivity() {
 
     private val viewModel: CheckoutViewModel by viewModels()
+    private lateinit var binding: ActivityCheckoutBinding
 
     private enum class Payment(val label: String) {
         CARD("Credit / debit card"),
@@ -47,39 +49,39 @@ class CheckoutActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCheckoutBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_checkout)
+        setContentView(binding.root)
         applyEdgeInsets(R.id.checkoutRoot)
 
         findViewById<ImageButton>(R.id.checkoutBack).setOnClickListener { finish() }
 
-        payCard = findViewById(R.id.payCard)
-        payUpi = findViewById(R.id.payUpi)
-        payCod = findViewById(R.id.payCod)
-        payCardCheck = findViewById(R.id.payCardCheck)
-        payUpiCheck = findViewById(R.id.payUpiCheck)
-        payCodCheck = findViewById(R.id.payCodCheck)
-        cardFields = findViewById(R.id.cardFields)
-
+        payCard = binding.payCard
+        payUpi = binding.payUpi
+        payCod = binding.payCod
+        payCardCheck = binding.payCardCheck
+        payUpiCheck = binding.payUpiCheck
+        payCodCheck = binding.payCodCheck
+        cardFields = binding.cardFields
         payCard.setOnClickListener { selectPayment(Payment.CARD) }
         payUpi.setOnClickListener { selectPayment(Payment.UPI) }
         payCod.setOnClickListener { selectPayment(Payment.COD) }
         selectPayment(Payment.CARD)
 
-        findViewById<Button>(R.id.checkoutPlaceOrder).setOnClickListener { placeOrder() }
+        binding.checkoutPlaceOrder.setOnClickListener { placeOrder() }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.totals.collect { totals ->
-                        findViewById<TextView>(R.id.checkoutSubtotal).text =
+                        binding.checkoutSubtotal.text =
                             PriceFormat.format(totals.subtotal)
-                        findViewById<TextView>(R.id.checkoutShipping).text =
+                        binding.checkoutShipping.text =
                             if (totals.shipping == 0.0) getString(R.string.shipping_free)
                             else PriceFormat.format(totals.shipping)
-                        findViewById<TextView>(R.id.checkoutTax).text =
+                        binding.checkoutTax.text =
                             PriceFormat.format(totals.tax)
-                        findViewById<TextView>(R.id.checkoutTotal).text =
+                        binding.checkoutTotal.text =
                             PriceFormat.format(totals.total)
                     }
                 }
@@ -118,10 +120,10 @@ class CheckoutActivity : AppCompatActivity() {
     }
 
     private fun placeOrder() {
-        val address = findViewById<EditText>(R.id.checkoutAddress).text.toString().trim()
-        val city = findViewById<EditText>(R.id.checkoutCity).text.toString().trim()
-        val postal = findViewById<EditText>(R.id.checkoutPostal).text.toString().trim()
-        val phone = findViewById<EditText>(R.id.checkoutPhone).text.toString().trim()
+        val address = binding.checkoutAddress.text.toString().trim()
+        val city = binding.checkoutCity.text.toString().trim()
+        val postal = binding.checkoutPostal.text.toString().trim()
+        val phone = binding.checkoutPhone.text.toString().trim()
 
         if (address.isEmpty() || city.isEmpty() || postal.isEmpty() || phone.isEmpty()) {
             Toast.makeText(this, R.string.error_address_required, Toast.LENGTH_SHORT).show()
@@ -129,9 +131,9 @@ class CheckoutActivity : AppCompatActivity() {
         }
 
         if (paymentMethod == Payment.CARD) {
-            val number = findViewById<EditText>(R.id.checkoutCardNumber).text.toString().trim()
-            val expiry = findViewById<EditText>(R.id.checkoutCardExpiry).text.toString().trim()
-            val cvv = findViewById<EditText>(R.id.checkoutCardCvv).text.toString().trim()
+            val number = binding.checkoutCardNumber.text.toString().trim()
+            val expiry = binding.checkoutCardExpiry.text.toString().trim()
+            val cvv = binding.checkoutCardCvv.text.toString().trim()
             if (number.length < 12 || expiry.length < 4 || cvv.length < 3) {
                 Toast.makeText(this, R.string.error_card_required, Toast.LENGTH_SHORT).show()
                 return

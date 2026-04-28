@@ -1,5 +1,6 @@
 package com.example.e_commerce_app.ui.checkout
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.e_commerce_app.data.repository.CartRepository
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -25,7 +27,7 @@ class CheckoutViewModel @Inject constructor(
     val placement: StateFlow<Placement> = _placement.asStateFlow()
 
     val items: StateFlow<List<CartItem>> = cartRepo.observeCart()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val totals: StateFlow<Totals> = cartRepo.observeCart()
         .map { items ->
@@ -37,25 +39,27 @@ class CheckoutViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), Totals())
 
     fun placeOrder(paymentMethod: String, shippingAddress: String) {
-        val current = items.value
-        if (current.isEmpty()) {
-            _placement.value = Placement.Error("Cart is empty")
-            return
-        }
         viewModelScope.launch {
-            _placement.value = Placement.Loading
-            val totals = totals.value
-            val orderId = orderRepo.placeOrder(
-                items = current,
-                subtotal = totals.subtotal,
-                shipping = totals.shipping,
-                tax = totals.tax,
-                total = totals.total,
-                paymentMethod = paymentMethod,
-                shippingAddress = shippingAddress
-            )
-            cartRepo.clear()
-            _placement.value = Placement.Success(orderId, totals.total)
+            val current = cartRepo.observeCart().first()
+            if (current.isEmpty()) {
+                _placement.value = Placement.Error("Cart is empty")
+                return@launch
+            }
+            viewModelScope.launch {
+                _placement.value = Placement.Loading
+                val totals = totals.value
+                val orderId = orderRepo.placeOrder(
+                    items = current,
+                    subtotal = totals.subtotal,
+                    shipping = totals.shipping,
+                    tax = totals.tax,
+                    total = totals.total,
+                    paymentMethod = paymentMethod,
+                    shippingAddress = shippingAddress
+                )
+                cartRepo.clear()
+                _placement.value = Placement.Success(orderId, totals.total)
+            }
         }
     }
 

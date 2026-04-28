@@ -17,6 +17,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.e_commerce_app.R
+import com.example.e_commerce_app.databinding.ActivitySignupBinding
 import com.example.e_commerce_app.ui.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -25,20 +26,22 @@ import kotlinx.coroutines.launch
 class SignupActivity : AppCompatActivity() {
 
     private val viewModel: AuthViewModel by viewModels()
+    private lateinit var binding: ActivitySignupBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySignupBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_signup)
+        setContentView(binding.root)
         applyEdgeInsets(R.id.signupRoot)
 
-        val nameField = findViewById<EditText>(R.id.signupName)
-        val emailField = findViewById<EditText>(R.id.signupEmail)
-        val passField = findViewById<EditText>(R.id.signupPassword)
-        val confirmField = findViewById<EditText>(R.id.signupConfirm)
-        val signupBtn = findViewById<Button>(R.id.signupButton)
-        val backBtn = findViewById<ImageButton>(R.id.signupBack)
-        val toLogin = findViewById<TextView>(R.id.goToLogin)
+        val nameField = binding.signupName
+        val emailField = binding.signupEmail
+        val passField = binding.signupPassword
+        val confirmField = binding.signupConfirm
+        val signupBtn = binding.signupButton
+        val backBtn = binding.signupBack
+        val toLogin = binding.goToLogin
 
         backBtn.setOnClickListener { finish() }
         toLogin.setOnClickListener { finish() }

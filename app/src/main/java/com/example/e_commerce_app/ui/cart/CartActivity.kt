@@ -17,6 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce_app.R
+import com.example.e_commerce_app.databinding.ActivityCartBinding
 import com.example.e_commerce_app.ui.checkout.CheckoutActivity
 import com.example.e_commerce_app.util.PriceFormat
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +27,7 @@ import kotlinx.coroutines.launch
 class CartActivity : AppCompatActivity() {
 
     private val viewModel: CartViewModel by viewModels()
+    private lateinit var binding: ActivityCartBinding
 
     private lateinit var adapter: CartAdapter
     private lateinit var emptyState: View
@@ -39,18 +41,19 @@ class CartActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCartBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_cart)
+        setContentView(binding.root)
         applyEdgeInsets(R.id.cartRoot)
 
-        list = findViewById(R.id.cartList)
-        emptyState = findViewById(R.id.cartEmptyState)
-        summary = findViewById(R.id.cartSummary)
-        subtotalText = findViewById(R.id.cartSubtotal)
-        shippingText = findViewById(R.id.cartShipping)
-        taxText = findViewById(R.id.cartTax)
-        totalText = findViewById(R.id.cartTotal)
-        itemCountText = findViewById(R.id.cartItemCount)
+        list = binding.cartList
+        emptyState = binding.cartEmptyState
+        summary = binding.cartSummary
+        subtotalText = binding.cartSubtotal
+        shippingText = binding.cartShipping
+        taxText = binding.cartTax
+        totalText = binding.cartTotal
+        itemCountText = binding.cartItemCount
 
         adapter = CartAdapter(
             onIncrement = { viewModel.increment(it) },
@@ -60,9 +63,9 @@ class CartActivity : AppCompatActivity() {
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = adapter
 
-        findViewById<ImageButton>(R.id.cartBack).setOnClickListener { finish() }
-        findViewById<Button>(R.id.cartEmptyShopButton).setOnClickListener { finish() }
-        findViewById<Button>(R.id.cartCheckoutButton).setOnClickListener {
+        binding.cartBack.setOnClickListener { finish() }
+        binding.cartEmptyShopButton.setOnClickListener { finish() }
+        binding.cartCheckoutButton.setOnClickListener {
             startActivity(Intent(this, CheckoutActivity::class.java))
         }
 

@@ -16,6 +16,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.e_commerce_app.R
+import com.example.e_commerce_app.databinding.ActivityLoginBinding
 import com.example.e_commerce_app.ui.home.HomeActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -24,17 +25,19 @@ import kotlinx.coroutines.launch
 class LoginActivity : AppCompatActivity() {
 
     private val viewModel: AuthViewModel by viewModels()
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_login)
+        setContentView(binding.root)
         applyEdgeInsets(R.id.loginRoot)
 
-        val emailField = findViewById<EditText>(R.id.loginEmail)
-        val passwordField = findViewById<EditText>(R.id.loginPassword)
-        val loginBtn = findViewById<Button>(R.id.loginButton)
-        val toSignup = findViewById<TextView>(R.id.goToSignup)
+        var passwordField = binding.loginPassword
+        var emailField = binding.loginEmail
+        var loginBtn = binding.loginButton
+        var toSignup = binding.goToSignup
 
         emailField.setText(viewModel.preFilledEmail())
 
