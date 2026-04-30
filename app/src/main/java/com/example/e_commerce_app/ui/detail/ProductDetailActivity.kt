@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.e_commerce_app.R
 import com.example.e_commerce_app.data.repository.CartRepository
+import com.example.e_commerce_app.databinding.ActivityProductDetailBinding
 import com.example.e_commerce_app.domain.model.Product
 import com.example.e_commerce_app.ui.cart.CartActivity
 import com.example.e_commerce_app.ui.checkout.CheckoutActivity
@@ -39,6 +40,7 @@ import javax.inject.Inject
 class ProductDetailActivity : AppCompatActivity() {
 
     private val viewModel: ProductDetailViewModel by viewModels()
+    private lateinit var binding: ActivityProductDetailBinding
 
     @Inject lateinit var cartRepo: CartRepository
 
@@ -50,8 +52,9 @@ class ProductDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityProductDetailBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_product_detail)
+        setContentView(binding.root)
         applyEdgeInsets(R.id.detailRoot)
 
         val productId = intent.getIntExtra(EXTRA_PRODUCT_ID, -1)
@@ -59,11 +62,11 @@ class ProductDetailActivity : AppCompatActivity() {
 
         pagerAdapter = ImagePagerAdapter()
         reviewAdapter = ReviewAdapter()
-        dotsContainer = findViewById(R.id.detailDots)
-        wishlistBtn = findViewById(R.id.detailWishlist)
-        cartBadge = findViewById(R.id.detailCartBadge)
+        dotsContainer = binding.detailDots
+        wishlistBtn = binding.detailWishlist
+        cartBadge = binding.detailCartBadge
 
-        val pager = findViewById<ViewPager2>(R.id.detailPager)
+        val pager = binding.detailPager
         pager.adapter = pagerAdapter
         pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -71,21 +74,21 @@ class ProductDetailActivity : AppCompatActivity() {
             }
         })
 
-        val reviewsList = findViewById<RecyclerView>(R.id.reviewsList)
+        val reviewsList = binding.reviewsList
         reviewsList.layoutManager = LinearLayoutManager(this)
         reviewsList.adapter = reviewAdapter
 
-        findViewById<ImageButton>(R.id.detailBack).setOnClickListener { finish() }
-        findViewById<FrameLayout>(R.id.detailCart).setOnClickListener {
+        binding.detailBack.setOnClickListener { finish() }
+        binding.detailCart.setOnClickListener {
             startActivity(Intent(this, CartActivity::class.java))
         }
         wishlistBtn.setOnClickListener { viewModel.toggleWishlist() }
 
-        findViewById<Button>(R.id.detailAddToCart).setOnClickListener {
+        binding.detailAddToCart.setOnClickListener {
             viewModel.addToCart()
             Toast.makeText(this, R.string.msg_added_to_cart, Toast.LENGTH_SHORT).show()
         }
-        findViewById<Button>(R.id.detailBuyNow).setOnClickListener {
+        binding.detailBuyNow.setOnClickListener {
             viewModel.addToCart()
             startActivity(Intent(this, CheckoutActivity::class.java))
         }
@@ -137,16 +140,16 @@ class ProductDetailActivity : AppCompatActivity() {
         pagerAdapter.submit(images)
         renderDots(images.size, 0)
 
-        findViewById<TextView>(R.id.detailBrand).text =
+        binding.detailBrand.text =
             product.brand.ifEmpty { product.displayCategory }
-        findViewById<TextView>(R.id.detailName).text = product.title
-        findViewById<TextView>(R.id.detailRating).text =
+        binding.detailName.text = product.title
+        binding.detailRating.text =
             "%.1f · %d in stock".format(product.rating, product.stock)
-        findViewById<TextView>(R.id.detailPrice).text = PriceFormat.format(product.price)
-        findViewById<TextView>(R.id.detailDescription).text = product.description
+        binding.detailPrice.text = PriceFormat.format(product.price)
+        binding.detailDescription.text = product.description
 
-        val original = findViewById<TextView>(R.id.detailPriceOriginal)
-        val discount = findViewById<TextView>(R.id.detailDiscount)
+        val original = binding.detailPriceOriginal
+        val discount = binding.detailDiscount
         if (product.discountPercentage > 0) {
             original.text = PriceFormat.format(product.originalPrice)
             original.paintFlags = original.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
@@ -159,11 +162,11 @@ class ProductDetailActivity : AppCompatActivity() {
         }
 
         if (detail.reviews.isEmpty()) {
-            findViewById<View>(R.id.reviewsEmpty).visibility = View.VISIBLE
-            findViewById<View>(R.id.reviewsList).visibility = View.GONE
+            binding.reviewsEmpty.visibility = View.VISIBLE
+            binding.reviewsList.visibility = View.GONE
         } else {
-            findViewById<View>(R.id.reviewsEmpty).visibility = View.GONE
-            findViewById<View>(R.id.reviewsList).visibility = View.VISIBLE
+            binding.reviewsEmpty.visibility = View.GONE
+            binding.reviewsList.visibility = View.VISIBLE
             reviewAdapter.submit(detail.reviews)
         }
     }

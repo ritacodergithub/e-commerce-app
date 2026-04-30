@@ -14,6 +14,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.e_commerce_app.R
+import com.example.e_commerce_app.databinding.ActivityOrderHistoryBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -21,22 +22,24 @@ import kotlinx.coroutines.launch
 class OrderHistoryActivity : AppCompatActivity() {
 
     private val viewModel: OrderHistoryViewModel by viewModels()
+    private lateinit var binding: ActivityOrderHistoryBinding
     private lateinit var adapter: OrderAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityOrderHistoryBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_order_history)
+        setContentView(binding.root)
         applyEdgeInsets(R.id.ordersRoot)
 
         findViewById<ImageButton>(R.id.ordersBack).setOnClickListener { finish() }
 
         adapter = OrderAdapter()
-        val list = findViewById<RecyclerView>(R.id.ordersList)
+        val list = binding.ordersList
         list.layoutManager = LinearLayoutManager(this)
         list.adapter = adapter
 
-        val empty = findViewById<View>(R.id.ordersEmpty)
+        val empty = binding.ordersEmpty
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

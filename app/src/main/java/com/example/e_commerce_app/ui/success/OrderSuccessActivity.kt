@@ -10,15 +10,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.e_commerce_app.R
+import com.example.e_commerce_app.databinding.ActivityOrderSuccessBinding
 import com.example.e_commerce_app.ui.home.HomeActivity
 import com.example.e_commerce_app.util.PriceFormat
 
 class OrderSuccessActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityOrderSuccessBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityOrderSuccessBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_order_success)
+        setContentView(binding.root)
         applyEdgeInsets(R.id.successRoot)
 
         val orderId = intent.getStringExtra(EXTRA_ORDER_ID) ?: "SHP-000000"

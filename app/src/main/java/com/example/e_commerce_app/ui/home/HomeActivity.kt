@@ -27,6 +27,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.example.e_commerce_app.R
 import com.example.e_commerce_app.data.repository.AuthRepository
+import com.example.e_commerce_app.databinding.ActivityHomeBinding
 import com.example.e_commerce_app.ui.auth.LoginActivity
 import com.example.e_commerce_app.ui.cart.CartActivity
 import com.example.e_commerce_app.ui.common.UiState
@@ -44,6 +45,7 @@ import javax.inject.Inject
 class HomeActivity : AppCompatActivity() {
 
     private val viewModel: HomeViewModel by viewModels()
+    private lateinit var binding: ActivityHomeBinding
 
     @Inject lateinit var auth: AuthRepository
 
@@ -64,23 +66,24 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_home)
+        setContentView(binding.root)
         applyEdgeInsets(R.id.homeRoot)
 
         findViewById<TextView>(R.id.homeGreeting).text =
             getString(R.string.home_greeting, auth.userName())
 
-        searchInput = findViewById(R.id.searchInput)
-        searchClear = findViewById(R.id.searchClear)
-        resultsLabel = findViewById(R.id.resultsLabel)
-        resultsCount = findViewById(R.id.resultsCount)
-        emptyState = findViewById(R.id.emptyState)
-        grid = findViewById(R.id.productGrid)
-        cartBadge = findViewById(R.id.cartBadge)
-        bannerPager = findViewById(R.id.bannerPager)
-        bannerDots = findViewById(R.id.bannerDots)
-        swipe = findViewById(R.id.homeSwipe)
+        searchInput = binding.searchInput
+        searchClear = binding.searchClear
+        resultsLabel = binding.resultsLabel
+        resultsCount = binding.resultsCount
+        emptyState = binding.emptyState
+        grid = binding.productGrid
+        cartBadge = binding.cartBadge
+        bannerPager = binding.bannerPager
+        bannerDots = binding.bannerDots
+        swipe = binding.homeSwipe
 
         setUpBanners()
         setUpCategories()
@@ -175,19 +178,19 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setUpToolbarActions() {
-        findViewById<FrameLayout>(R.id.cartButton).setOnClickListener {
+        binding.cartButton.setOnClickListener {
             startActivity(Intent(this, CartActivity::class.java))
         }
-        findViewById<ImageButton>(R.id.homeWishlistButton).setOnClickListener {
+        binding.homeWishlistButton.setOnClickListener {
             startActivity(Intent(this, WishlistActivity::class.java))
         }
-        findViewById<ImageButton>(R.id.homeOrdersButton).setOnClickListener {
+        binding.homeOrdersButton.setOnClickListener {
             startActivity(Intent(this, OrderHistoryActivity::class.java))
         }
-        findViewById<ImageButton>(R.id.filterButton).setOnClickListener {
+        binding.filterButton.setOnClickListener {
             FilterBottomSheet.newInstance().show(supportFragmentManager, "filters")
         }
-        findViewById<ImageButton>(R.id.logoutButton).setOnClickListener {
+        binding.logoutButton.setOnClickListener {
             auth.logout()
             startActivity(Intent(this, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
